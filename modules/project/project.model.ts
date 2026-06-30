@@ -10,6 +10,7 @@ const projectSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      unique: true,
     },
     favourite: {
       type: Boolean,
@@ -29,4 +30,5 @@ export type CreateProjectType = Pick<
   "userId" | "name" | "favourite"
 >;
 
-export const ProjectModel = mongoose.model("Project", projectSchema);
+export const ProjectModel =
+  mongoose.models.Project || mongoose.model("Project", projectSchema);

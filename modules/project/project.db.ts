@@ -16,7 +16,8 @@ export const getProjectsByUserIdDB = (userId: string, page = 1, limit = 10) => {
   })
     .sort({ createdAt: -1 })
     .skip(skip)
-    .limit(limit);
+    .limit(limit)
+    .lean();
 };
 
 export const getFavouriteProjectsByUserIdDB = (
@@ -32,5 +33,21 @@ export const getFavouriteProjectsByUserIdDB = (
   })
     .sort({ createdAt: -1 })
     .skip(skip)
-    .limit(limit);
+    .limit(limit)
+    .lean();
+};
+
+export const updateProjectFavouriteDB = (projectId: string, bool: boolean) => {
+  return ProjectModel.findOneAndUpdate(
+    {
+      _id: projectId,
+    },
+    {
+      favourite: bool,
+    },
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
 };

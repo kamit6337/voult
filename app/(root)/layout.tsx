@@ -1,27 +1,32 @@
-import React from "react";
-import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
-import ModeToggle from "@/components/mode/ModeToggle";
+import { AppSidebar } from "@/components/app-sidebar";
 
+import { Separator } from "@/components/ui/separator";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
+import HeaderTitle from "./HeaderTitle";
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <>
-      <header className="flex justify-end items-center p-4 gap-4 h-16">
-        <ModeToggle />
-        <Show when="signed-out">
-          <SignInButton />
-          <SignUpButton>
-            <button className="bg-purple-700 text-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">
-              Sign Up
-            </button>
-          </SignUpButton>
-        </Show>
-        <Show when="signed-in">
-          <UserButton />
-        </Show>
-      </header>
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+          <div className="flex items-center gap-2 px-4">
+            <SidebarTrigger className="-ml-1" />
+            <Separator
+              orientation="vertical"
+              className="mr-2 data-vertical:h-4 data-vertical:self-auto"
+            />
+            <HeaderTitle />
+          </div>
+        </header>
 
-      {children}
-    </>
+        <main className="p-6">{children}</main>
+        <div className="h-96" />
+      </SidebarInset>
+    </SidebarProvider>
   );
 };
 
