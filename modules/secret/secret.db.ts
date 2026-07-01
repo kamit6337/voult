@@ -1,21 +1,25 @@
 import {
   CreateSecretType,
   SecretModel,
+  SecretType,
   UpdateSecretType,
 } from "./secret.model";
 
-export const createSecretDB = (data: CreateSecretType) => {
+export const createSecretDB = (data: CreateSecretType): Promise<SecretType> => {
   return SecretModel.create({
     userId: data.userId,
     projectId: data.projectId,
     name: data.name,
-    valueType: data.valueType,
     value: data.value,
     favourite: data.favourite,
   });
 };
 
-export const getSecretsByUserIdDB = (userId: string, page = 1, limit = 30) => {
+export const getSecretsByUserIdDB = (
+  userId: string,
+  page = 1,
+  limit = 30,
+): Promise<SecretType[]> => {
   const skip = (page - 1) * limit;
 
   return SecretModel.find({
@@ -79,7 +83,6 @@ export const updateSingleSecretDB = (data: UpdateSecretType) => {
     },
     {
       name: data.name,
-      valueType: data.valueType,
       value: data.value,
     },
     {

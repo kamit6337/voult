@@ -2,16 +2,19 @@
   "name": "reactjs",
   "version": "1.0.1",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "dev:doppler": "doppler run -- npm run dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "shadcn": "npx shadcn@latest add button"
+    "shadcn": "npx shadcn@latest add button",
+    "key": "node generateSecretKey.js"
   },
   "dependencies": {
     "@clerk/nextjs": "^7.4.1",
+    "@hookform/resolvers": "^5.4.0",
     "@reduxjs/toolkit": "^2.12.0",
     "@tanstack/react-query": "^5.100.11",
     "@tanstack/react-query-devtools": "^5.100.11",

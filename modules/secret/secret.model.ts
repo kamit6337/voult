@@ -15,20 +15,20 @@ const secretSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    valueType: {
-      type: String,
-      enum: ["url", "password", "token", "integer", "string"],
-      required: true,
-    },
     value: {
       type: String,
       required: true,
       trim: true,
     },
+    encryptionVersion: {
+      type: Number,
+      default: 1,
+      required: false,
+      select: false,
+    },
     favourite: {
       type: Boolean,
-      default: false,
-      required: false,
+      required: true,
     },
   },
   {
@@ -59,16 +59,19 @@ secretSchema.index({
   createdAt: -1,
 });
 
-type SecretType = InferSchemaType<typeof secretSchema>;
+export type SecretType = Omit<
+  InferSchemaType<typeof secretSchema>,
+  "projectId"
+> & { _id: string; projectId?: string };
 
 export type CreateSecretType = Pick<
   SecretType,
-  "userId" | "projectId" | "name" | "valueType" | "value" | "favourite"
+  "userId" | "projectId" | "name" | "value" | "favourite"
 >;
 
 export type UpdateSecretType = Pick<
   SecretType,
-  "name" | "valueType" | "value" | "favourite"
+  "name" | "value" | "favourite"
 > & { _id: string };
 
 export const SecretModel =
