@@ -1,11 +1,7 @@
-import z from "zod";
-
-const envSchema = z.object({
-  MONGODB_URI: z.string().startsWith("mongodb"),
-  CLERK_SECRET_KEY: z.string().startsWith("sk_"),
-  SECRET_ENCRYPTION_KEY: z.string(),
-});
-
-const environment = envSchema.parse(process.env);
+const environment = {
+  MONGODB_URI: process.env.MONGODB_URI!,
+  CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY!,
+  SECRET_ENCRYPTION_KEY: process.env.SECRET_ENCRYPTION_KEY!,
+};
 
 export default environment;
